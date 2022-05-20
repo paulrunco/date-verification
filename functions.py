@@ -32,7 +32,6 @@ def update_report(path_to_date_verification, path_to_estimated_completion, trans
     promise_date['Verified Current Promise Date'] = promise_date['Verified Current Promise Date'].dt.date
 
     ## Write promise dates into the Promise Date Verification template
-    print(promise_date)
     with pd.ExcelWriter(
         path_to_date_verification,
         mode="a",
