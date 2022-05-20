@@ -1,4 +1,4 @@
-# Supply Line Utility
+# Date Verification Utility
 
 ![Screenshot](screenshot.jpg)
 
@@ -14,6 +14,7 @@ Download and run the latest release.
 1. Click the first 'browse' button, navigate to and select the spreadsheet file containing estimated dates from the scheduler.
 2. Click the second 'browse' button, navigate to and select the spreadsheet file containing the Promise Date Verification template from the customer.
 3. Enter a number of days to add to the estimated completion dates provided by the scheduler and select whether weekends should be included in the transit time calculation. Note that transit time does not include the estimated ship date.
+4. Click 'Update report'. Updates will be made over the selected Promise Date Verification template.
 
 Example: 
 - Entering three (3) in 'Transit Time Days' and unchecking 'Include Weekends' will result in a shipment that is shipped on 5/6/2022 being promised for delivery on 5/11/2022.
