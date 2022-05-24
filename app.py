@@ -16,7 +16,7 @@ class App(Tk):
         self.iconbitmap(path_to_icon)
         self.title('Date Verification Utility')
         self.version = "1.0.0"
-        self.author = "Paul Runco"
+        self.author = "PRunco"
 
         self.settings = settings.load()
 
@@ -27,7 +27,7 @@ class App(Tk):
         # self.filemenu.add_command(label="Settings", command=lambda: self.display_settings(self), accelerator="Ctrl+.")
         self.filemenu.add_command(label="Clear", command=self.clear_form, accelerator="Ctrl+Delete")
         self.filemenu.add_separator()
-        self.filemenu.add_command(label="Exit", command=self.quit, accelerator="Ctrl+Q")
+        self.filemenu.add_command(label="Exit", command=self.close_app, accelerator="Ctrl+Q")
         self.menubar.add_cascade(label="File", menu=self.filemenu)
 
         self.helpmenu = Menu(self.menubar, tearoff=False)
@@ -35,7 +35,7 @@ class App(Tk):
         self.helpmenu.add_command(label="Documentation", command=self.open_docs, accelerator="Ctrl+?")
         self.menubar.add_cascade(label="Help", menu=self.helpmenu)
 
-        self.bind_all("<Control-q>", exit)
+        self.bind_all("<Control-q>", self.close_app)
         self.bind_all("<Control-?>", self.open_docs)
         self.bind_all("<Control-Delete>", self.clear_form)
 
@@ -179,6 +179,9 @@ class App(Tk):
     def open_docs(self, event=None):
         webbrowser.open('https://github.com/paulrunco/date-verification')
 
+
+    def close_app(self, even=None):
+        self.quit()
 
 if __name__=="__main__":
     app = App()
