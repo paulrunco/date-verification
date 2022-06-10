@@ -15,7 +15,7 @@ class App(Tk):
         path_to_icon = path.abspath(path.join(path.dirname(__file__), 'icon.ico'))
         self.iconbitmap(path_to_icon)
         self.title('Date Verification Utility')
-        self.version = "1.0.0"
+        self.version = "1.1.0"
         self.author = "PRunco"
 
         self.settings = settings.load()

@@ -1,3 +1,5 @@
+import datetime as dt
+from re import sub
 import pandas as pd
 
 def update_report(path_to_date_verification, path_to_estimated_completion, transit_days, include_weekends):
@@ -16,6 +18,22 @@ def update_report(path_to_date_verification, path_to_estimated_completion, trans
         sheet_name=0,
         usecols='A:H'
         )).set_index(['PO', 'Line'])
+
+    ## Find and fix Excel-formatted dates 
+
+    if estimated_date['Estimated Ship Date'].dtype == 'object':
+        estimated_date = estimated_date.sort_index()
+        for i, row in estimated_date[estimated_date['Estimated Ship Date'].astype(str).str.match('\d{5}')].iterrows():
+            excel_date = row['Estimated Ship Date']
+            try:
+                fixed_date = pd.to_datetime(excel_date, unit='d', origin='1899-12-30')
+                estimated_date.loc[i, 'Estimated Ship Date'] = fixed_date
+            except:
+                print('Dates cannot be automatically converted. Rows with malformed dates will be ignored.')
+
+    ## Remove any malformed dates
+    estimated_date['Estimated Ship Date'] = pd.to_datetime(estimated_date['Estimated Ship Date'], errors='coerce')
+    estimated_date.dropna(inplace=True, subset=['Estimated Ship Date'])
 
     ## Look up estimated completion dates from scheduling sheet
     promise_date = promise_date.join(
