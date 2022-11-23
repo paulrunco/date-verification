@@ -11,13 +11,21 @@ def update_report(path_to_date_verification, path_to_estimated_completion, trans
         sheet_name='Requested Updates'
         ))
 
+    # Create an index column using order-release
+    promise_date['Order-Line'] = promise_date['PO #'].astype(str) + '-' + promise_date['Line #'].astype(str)
+    promise_date = promise_date.set_index(['Order-Line'])
+
     ## Make a dataframe of the input data
     estimated_date = pd.DataFrame(pd.read_excel(
         path_to_estimated_completion,
         header=0,
         sheet_name=0,
         usecols='A:H'
-        )).set_index(['PO', 'Line'])
+        ))
+
+    # Create an index column using order-release
+    estimated_date['Order-Line'] = estimated_date['PO'].astype(str) + '-' + estimated_date['Line'].astype(str)
+    estimated_date = estimated_date.set_index(['Order-Line'])
 
     ## Find and fix Excel-formatted dates 
 
@@ -38,7 +46,7 @@ def update_report(path_to_date_verification, path_to_estimated_completion, trans
     ## Look up estimated completion dates from scheduling sheet
     promise_date = promise_date.join(
         estimated_date['Estimated Ship Date'],
-        on=['PO #', 'Line #'])
+        on=['Order-Line'])
 
     # Update promise dates
     if include_weekends:
